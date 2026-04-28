@@ -1,0 +1,2600 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía Senior de Entrevista - Julian Hernández</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --bg: #0f1720;
+    --bg-soft: #17212b;
+    --panel: rgba(16, 27, 39, 0.82);
+    --panel-2: rgba(23, 34, 47, 0.96);
+    --line: rgba(255, 255, 255, 0.09);
+    --text: #eef4f7;
+    --muted: #9db0bb;
+    --accent: #f59e0b;
+    --accent-2: #22c55e;
+    --accent-3: #38bdf8;
+    --danger: #fb7185;
+    --shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+    --radius: 20px;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Manrope', sans-serif;
+    color: var(--text);
+    background:
+      radial-gradient(circle at top left, rgba(245, 158, 11, 0.18), transparent 28%),
+      radial-gradient(circle at top right, rgba(56, 189, 248, 0.14), transparent 22%),
+      linear-gradient(180deg, #0c131a 0%, #101922 48%, #0b1117 100%);
+    min-height: 100vh;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  .shell {
+    width: min(1400px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 24px 0 48px;
+  }
+
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(14px);
+    background: linear-gradient(180deg, rgba(12, 19, 26, 0.94), rgba(12, 19, 26, 0.72));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .topbar-inner {
+    width: min(1400px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 14px 0;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .brand {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .brand-mark {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--accent), #f97316);
+    color: #111827;
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+    letter-spacing: 1px;
+    box-shadow: var(--shadow);
+  }
+
+  .brand-copy small,
+  .eyebrow,
+  .tag,
+  .pill,
+  .meta,
+  .mini-label,
+  .card-id,
+  .table-title,
+  .kbd {
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .brand-copy small {
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .brand-copy strong {
+    display: block;
+    font-size: 15px;
+    letter-spacing: 0.1px;
+  }
+
+  .top-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .search {
+    min-width: min(380px, 100%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    padding: 10px 14px;
+  }
+
+  .search input {
+    flex: 1;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: var(--text);
+    font-size: 14px;
+  }
+
+  .search input::placeholder {
+    color: #7d90a0;
+  }
+
+  .btn {
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text);
+    padding: 10px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s ease;
+  }
+
+  .btn:hover,
+  .btn:focus-visible {
+    border-color: rgba(245, 158, 11, 0.42);
+    background: rgba(245, 158, 11, 0.1);
+    outline: none;
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 20px;
+    margin-top: 24px;
+  }
+
+  .hero-panel,
+  .side-panel,
+  .study-panel,
+  .question-card,
+  .summary-table,
+  .note-panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .hero-panel {
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-panel::after {
+    content: "";
+    position: absolute;
+    right: -80px;
+    top: -80px;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.24), transparent 72%);
+    pointer-events: none;
+  }
+
+  .eyebrow {
+    color: var(--accent);
+    letter-spacing: 2px;
+    font-size: 11px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-size: clamp(32px, 4vw, 54px);
+    line-height: 1.02;
+    max-width: 11ch;
+    margin-bottom: 16px;
+  }
+
+  .lead {
+    font-size: 17px;
+    color: #cbd9df;
+    line-height: 1.75;
+    max-width: 68ch;
+  }
+
+  .tag-row,
+  .pills,
+  .anchor-nav,
+  .stats,
+  .answer-grid,
+  .quick-grid,
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .tag-row {
+    margin-top: 22px;
+  }
+
+  .tag,
+  .pill {
+    border-radius: 999px;
+    padding: 7px 12px;
+    font-size: 11px;
+    letter-spacing: 0.7px;
+  }
+
+  .tag {
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.26);
+    color: #ffd49a;
+  }
+
+  .tag.alt {
+    background: rgba(34, 197, 94, 0.12);
+    border-color: rgba(34, 197, 94, 0.24);
+    color: #b5efc9;
+  }
+
+  .tag.info {
+    background: rgba(56, 189, 248, 0.12);
+    border-color: rgba(56, 189, 248, 0.24);
+    color: #b5e8fb;
+  }
+
+  .side-panel {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .mini-title {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  .meta {
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .stat {
+    background: var(--panel-2);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    padding: 14px;
+    flex: 1 1 140px;
+  }
+
+  .stat strong {
+    font-size: 22px;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .stat span {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .study-panel {
+    margin-top: 18px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  .study-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 18px;
+    padding: 18px;
+  }
+
+  .study-box h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .study-box p,
+  .study-box li,
+  .summary-table td,
+  .summary-table th,
+  .answer-copy,
+  .note-panel p,
+  .question-body li {
+    line-height: 1.72;
+  }
+
+  .study-box ul,
+  .question-body ul,
+  .question-body ol {
+    padding-left: 18px;
+  }
+
+  .study-box li,
+  .question-body li {
+    color: #d9e6eb;
+    margin-bottom: 8px;
+  }
+
+  .anchor-nav {
+    margin: 24px 0 16px;
+    position: sticky;
+    top: 76px;
+    z-index: 30;
+    padding: 12px 0;
+    background: linear-gradient(180deg, rgba(12, 19, 26, 0.96), rgba(12, 19, 26, 0.74));
+  }
+
+  .anchor-nav a {
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 999px;
+    padding: 9px 14px;
+    font-size: 13px;
+    color: var(--muted);
+    transition: 0.2s ease;
+  }
+
+  .anchor-nav a:hover,
+  .anchor-nav a:focus-visible {
+    color: var(--text);
+    border-color: rgba(56, 189, 248, 0.34);
+    background: rgba(56, 189, 248, 0.1);
+    outline: none;
+  }
+
+  section {
+    margin-top: 34px;
+  }
+
+  .section-head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+
+  .section-head h2 {
+    font-size: clamp(24px, 3vw, 34px);
+    margin-bottom: 6px;
+  }
+
+  .section-head p {
+    color: var(--muted);
+    max-width: 66ch;
+  }
+
+  .section-count {
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--accent);
+    font-size: 12px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .question-list {
+    display: grid;
+    gap: 16px;
+  }
+
+  .question-card {
+    overflow: hidden;
+  }
+
+  .question-card[hidden] {
+    display: none !important;
+  }
+
+  .question-head {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    text-align: left;
+    padding: 22px 24px;
+    display: flex;
+    align-items: start;
+    gap: 14px;
+  }
+
+  .question-head:hover,
+  .question-head:focus-visible {
+    background: rgba(255, 255, 255, 0.02);
+    outline: none;
+  }
+
+  .card-id {
+    min-width: 60px;
+    border-radius: 14px;
+    padding: 9px 10px;
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.18);
+    text-align: center;
+    letter-spacing: 0.8px;
+  }
+
+  .question-title-wrap {
+    flex: 1;
+  }
+
+  .question-title {
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+
+  .question-subtitle {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .caret {
+    font-size: 24px;
+    color: var(--muted);
+    line-height: 1;
+    transform: rotate(0deg);
+    transition: transform 0.2s ease;
+  }
+
+  .question-card.open .caret {
+    transform: rotate(180deg);
+    color: var(--accent);
+  }
+
+  .question-body {
+    display: none;
+    padding: 0 24px 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .question-card.open .question-body {
+    display: block;
+  }
+
+  .answer-grid {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .answer-box,
+  .quick-card {
+    background: var(--panel-2);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 18px;
+    padding: 18px;
+  }
+
+  .answer-box.full {
+    grid-column: 1 / -1;
+  }
+
+  .mini-label {
+    color: var(--accent-3);
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .answer-copy {
+    color: #d9e6eb;
+    font-size: 14px;
+  }
+
+  .answer-copy strong {
+    color: #ffffff;
+  }
+
+  .quote {
+    border-left: 3px solid var(--accent);
+    padding-left: 14px;
+    color: #f4e6cd;
+    font-style: italic;
+  }
+
+  .code {
+    margin-top: 10px;
+    background: #0b1117;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 14px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: #c8e9f5;
+    line-height: 1.7;
+    overflow-x: auto;
+    white-space: pre-wrap;
+  }
+
+  .quick-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .quick-card h3 {
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+
+  .quick-card p,
+  .quick-card li {
+    color: #d6e4e9;
+    font-size: 14px;
+  }
+
+  .summary-table {
+    padding: 20px;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    padding: 14px 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    text-align: left;
+    vertical-align: top;
+    font-size: 14px;
+  }
+
+  th {
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .note-panel {
+    margin-top: 22px;
+    padding: 20px;
+  }
+
+  .note-panel h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+
+  .note-panel p {
+    color: #dce9ee;
+  }
+
+  .chip-row {
+    margin-top: 14px;
+  }
+
+  .pill {
+    color: #dce9ee;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .pill.warn {
+    color: #ffd5dd;
+    border-color: rgba(251, 113, 133, 0.3);
+    background: rgba(251, 113, 133, 0.08);
+  }
+
+  .pill.good {
+    color: #c7f5d7;
+    border-color: rgba(34, 197, 94, 0.3);
+    background: rgba(34, 197, 94, 0.08);
+  }
+
+  .footer {
+    margin-top: 34px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  @media (max-width: 1120px) {
+    .hero,
+    .study-panel,
+    .answer-grid,
+    .quick-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .anchor-nav {
+      top: 72px;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .shell,
+    .topbar-inner {
+      width: min(100% - 20px, 1400px);
+    }
+
+    .topbar-inner,
+    .brand,
+    .top-actions,
+    .section-head {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .search {
+      min-width: 100%;
+    }
+
+    .hero-panel,
+    .side-panel,
+    .study-panel,
+    .question-head,
+    .question-body,
+    .summary-table,
+    .note-panel {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    .question-head {
+      gap: 10px;
+    }
+
+    .card-id {
+      min-width: 54px;
+      font-size: 10px;
+    }
+
+    .question-title {
+      font-size: 17px;
+    }
+
+    h1 {
+      max-width: none;
+    }
+  }
+
+  @media print {
+    .topbar,
+    .anchor-nav,
+    .btn,
+    .search,
+    .footer {
+      display: none !important;
+    }
+
+    body {
+      background: #fff;
+      color: #111;
+    }
+
+    .hero-panel,
+    .side-panel,
+    .study-panel,
+    .question-card,
+    .summary-table,
+    .note-panel,
+    .answer-box,
+    .quick-card,
+    .study-box {
+      background: #fff;
+      color: #111;
+      border: 1px solid #ddd;
+      box-shadow: none;
+    }
+
+    .question-body {
+      display: block !important;
+    }
+
+    .caret {
+      display: none;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-mark">JH</div>
+        <div class="brand-copy">
+          <small>Interview Prep System</small>
+          <strong>Guía senior de entrevista Flutter</strong>
+        </div>
+      </div>
+      <div class="top-actions">
+        <label class="search" aria-label="Buscar preguntas">
+          <span>Buscar</span>
+          <input id="searchInput" type="text" placeholder="SOLID, Cubit, DevTools, SQL, Git Flow, isolate...">
+        </label>
+        <button class="btn" id="expandAllBtn" type="button">Abrir todo</button>
+        <button class="btn" id="collapseAllBtn" type="button">Cerrar todo</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="shell">
+    <section class="hero">
+      <article class="hero-panel">
+        <div class="eyebrow">Versión lista para responder en entrevista</div>
+        <h1>Cómo sonar senior sin sonar memorizado</h1>
+        <p class="lead">Esta guía está armada para que respondas con lenguaje natural, criterio técnico y conexión con tu experiencia. La idea no es recitar teoría, sino explicar decisiones, trade-offs, arquitectura, rendimiento y liderazgo técnico con ejemplos que ya has tocado en proyectos como banca en Itaú, apps desde cero y trabajo con Clean Architecture, BLoC y servicios integrados.</p>
+        <div class="tag-row">
+          <span class="tag">+4 años Flutter</span>
+          <span class="tag alt">Banca en Itaú</span>
+          <span class="tag info">Apps desde 0: GreenWall y CanchaApp</span>
+          <span class="tag">BLoC + arquitectura limpia</span>
+          <span class="tag alt">CI/CD + PRs + testing</span>
+          <span class="tag info">Mobile + web + desktop</span>
+        </div>
+      </article>
+
+      <aside class="side-panel">
+        <div>
+          <div class="meta">Tu pitch de 30 segundos</div>
+          <h2 class="mini-title">Resumen profesional sugerido</h2>
+          <p class="answer-copy">Soy desarrollador Flutter con experiencia construyendo y escalando productos reales, especialmente en entornos exigentes como banca. He trabajado con arquitectura por capas, BLoC, integración con APIs, performance, testing y releases controlados. Normalmente me enfoco en código mantenible, desacoplado y testeable, y cuando tomo decisiones técnicas suelo justificar el impacto en rendimiento, escalabilidad y velocidad de evolución del producto.</p>
+        </div>
+        <div class="stats">
+          <div class="stat">
+            <strong>Senior mindset</strong>
+            <span>Hablar de trade-offs, testabilidad, observabilidad y costo de mantenimiento.</span>
+          </div>
+          <div class="stat">
+            <strong>Tu foco</strong>
+            <span>Arquitectura, estado, performance, claridad al explicar y criterio práctico.</span>
+          </div>
+        </div>
+        <div>
+          <div class="meta">Cómo responder mejor</div>
+          <div class="chip-row">
+            <span class="pill good">1. Respuesta corta</span>
+            <span class="pill good">2. Explicación técnica</span>
+            <span class="pill good">3. Ejemplo real</span>
+            <span class="pill warn">Evita sonar académico o rígido</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="study-panel">
+      <div class="study-box">
+        <h3>Fórmula de respuesta senior</h3>
+        <ul>
+          <li>Empieza con una definición corta y clara.</li>
+          <li>Luego explica por qué importa en producto o arquitectura.</li>
+          <li>Cierra con una experiencia tuya o una decisión técnica real.</li>
+          <li>Si aplica, menciona trade-off: simplicidad vs flexibilidad, rendimiento vs complejidad, velocidad vs mantenibilidad.</li>
+        </ul>
+      </div>
+      <div class="study-box">
+        <h3>Qué suelen medir de verdad</h3>
+        <ul>
+          <li>Si entiendes fundamentos y no solo herramientas.</li>
+          <li>Si sabes separar responsabilidades y evitar acoplamiento.</li>
+          <li>Si puedes justificar por qué una solución escala mejor que otra.</li>
+          <li>Si piensas en testing, monitoreo, edge cases y trabajo en equipo.</li>
+        </ul>
+      </div>
+    </section>
+
+    <nav class="anchor-nav">
+      <a href="#presentacion">Presentación</a>
+      <a href="#solid">SOLID</a>
+      <a href="#flutter">Flutter Core</a>
+      <a href="#state">Estado</a>
+      <a href="#dart">Dart y async</a>
+      <a href="#patterns">Patrones</a>
+      <a href="#performance">Performance</a>
+      <a href="#testing">Testing</a>
+      <a href="#algoritmos">Algoritmos</a>
+      <a href="#arquitectura">Arquitectura</a>
+      <a href="#backend">Backend y DB</a>
+      <a href="#workflow">Git y delivery</a>
+      <a href="#soft">Comportamiento</a>
+    </nav>
+
+    <section id="presentacion">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Bloque 01</div>
+          <h2>Presentación y narrativa</h2>
+          <p>Respuestas base para cuando te pidan que te presentes, cuentes tu experiencia o describas tu nivel como desarrollador Flutter.</p>
+        </div>
+        <div class="section-count">3 preguntas clave</div>
+      </div>
+
+      <div class="question-list">
+        <article class="question-card open" data-search="presentacion experiencia senior flutter itau clean architecture bloc">
+          <button class="question-head" type="button">
+            <span class="card-id">INTRO 01</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Cuéntame sobre ti y por qué te consideras un perfil senior</span>
+              <span class="question-subtitle">Tu objetivo es sonar sólido, práctico y confiable, no grandilocuente.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box">
+                <div class="mini-label">Respuesta corta</div>
+                <div class="answer-copy">Me considero un perfil senior porque no solo implemento pantallas o features, sino que tomo decisiones pensando en arquitectura, calidad, rendimiento y evolución del producto. He trabajado en entornos exigentes como banca, donde además de entregar funcionalidad, hay que cuidar seguridad, estabilidad, testing y trazabilidad.</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">Respuesta senior</div>
+                <div class="answer-copy">En mi caso, el nivel senior se nota en cómo estructuro la solución: separo capas, evito acoplamientos fuertes, pienso en testabilidad desde el diseño y trato de dejar el sistema listo para crecer sin que cada feature nueva obligue a reescribir lo anterior. También me importa mucho justificar decisiones, por ejemplo cuándo usar Cubit por simplicidad y cuándo pasar a BLoC por complejidad del flujo.</div>
+              </div>
+              <div class="answer-box full">
+                <div class="mini-label">Cómo aterrizarlo con tu experiencia</div>
+                <div class="answer-copy quote">He trabajado con Flutter en proyectos reales como banca en Itaú y aplicaciones construidas desde cero como GreenWall y CanchaApp. Ahí me tocó resolver estado complejo, consumo de APIs, arquitectura limpia, performance y testing. Eso me llevó a pensar menos en soluciones rápidas y más en soluciones mantenibles y escalables.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="fortalezas senior fortalezas flutter experiencia liderazgo criterio tecnico">
+          <button class="question-head" type="button">
+            <span class="card-id">INTRO 02</span>
+            <span class="question-title-wrap">
+              <span class="question-title">¿Cuáles son tus fortalezas principales como Flutter developer?</span>
+              <span class="question-subtitle">Ideal para abrir la conversación con una imagen técnica consistente.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">Diría que mis fortalezas están en cuatro frentes: arquitectura limpia, manejo de estado bien estructurado, optimización de rendimiento y capacidad para traducir necesidades del negocio en soluciones mantenibles. Me siento cómodo trabajando con BLoC/Cubit, repositorios, integración con APIs y debugging con DevTools. Además, me enfoco mucho en que el código quede entendible para el equipo y fácil de testear.</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">Qué te sube el nivel</div>
+                <div class="answer-copy">No me limito a que funcione; me preocupo por cómo se mantiene, cómo se prueba y qué tan costoso va a ser cambiarlo en seis meses.</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">Ejemplo rápido</div>
+                <div class="answer-copy">En banca, separar UI, BLoC y repositorios hizo posible cambiar implementaciones y testear flujos críticos sin tocar toda la app.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="debilidad mejora crecimiento feedback aprendizaje senior">
+          <button class="question-head" type="button">
+            <span class="card-id">INTRO 03</span>
+            <span class="question-title-wrap">
+              <span class="question-title">¿Qué estás fortaleciendo actualmente?</span>
+              <span class="question-subtitle">Pregunta típica para medir autoconciencia y madurez.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">Últimamente he buscado fortalecer aún más la parte de diseño de soluciones y trade-offs a nivel de producto, no solo a nivel de código. Por ejemplo, cuándo conviene meter más abstracción y cuándo mantener algo más simple para no sobreingenierizar. Mientras más experiencia tengo, más valoro ese equilibrio entre velocidad, claridad y escalabilidad.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="solid">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Bloque 02</div>
+          <h2>SOLID y diseño orientado a objetos</h2>
+          <p>Cómo nombrar los cinco principios, explicarlos sin sonar recitado y decir cuáles aplicas más en tu día a día.</p>
+        </div>
+        <div class="section-count">6 preguntas clave</div>
+      </div>
+
+      <div class="summary-table">
+        <div class="table-title meta">Resumen rápido SOLID</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Principio</th>
+              <th>Idea central</th>
+              <th>Cómo suena senior</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>SRP</td>
+              <td>Una razón para cambiar</td>
+              <td>Reduce acoplamiento, mejora lectura y testing.</td>
+            </tr>
+            <tr>
+              <td>OCP</td>
+              <td>Extender sin tocar lo estable</td>
+              <td>Usar contratos evita romper flujos existentes.</td>
+            </tr>
+            <tr>
+              <td>LSP</td>
+              <td>Las subclases respetan el contrato</td>
+              <td>Evita herencias que sorprenden o rompen expectativas.</td>
+            </tr>
+            <tr>
+              <td>ISP</td>
+              <td>Interfaces pequeñas</td>
+              <td>Permite mocks más simples y dependencias más claras.</td>
+            </tr>
+            <tr>
+              <td>DIP</td>
+              <td>Depender de abstracciones</td>
+              <td>Clave para arquitectura limpia, testing y cambio de implementaciones.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="question-list">
+        <article class="question-card" data-search="solid principios solid srp ocp lsp isp dip">
+          <button class="question-head" type="button">
+            <span class="card-id">SOLID 01</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Nómbrame los principios SOLID y dime cuáles aplicas más</span>
+              <span class="question-subtitle">Esta pregunta casi siempre busca claridad, no teoría infinita.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">SOLID corresponde a Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation y Dependency Inversion. En el día a día los que más aplico son SRP y DIP, porque son los que más impacto tienen en arquitectura Flutter: separar responsabilidades entre UI, BLoC y Repository, y hacer que los módulos dependan de contratos en vez de implementaciones concretas. También uso mucho ISP cuando divido contratos para que una capa solo dependa de lo que realmente necesita.</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">Cómo sonar senior</div>
+                <div class="answer-copy">No los veo como reglas académicas sino como herramientas para reducir costo de cambio y facilitar testing.</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">Conexión con tu experiencia</div>
+                <div class="answer-copy">En banca, si el código está acoplado, cambiar un flujo de autenticación o pagos puede impactar demasiadas piezas; por eso SRP y DIP dejan de ser teoría y se vuelven necesidad.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="single responsibility srp una clase una razon para cambiar">
+          <button class="question-head" type="button">
+            <span class="card-id">SOLID 02</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Single Responsibility Principle</span>
+              <span class="question-subtitle">Explícalo con un ejemplo simple y con Flutter.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box">
+                <div class="mini-label">Definición</div>
+                <div class="answer-copy">Una clase o módulo debe tener una sola razón para cambiar. Si una misma clase valida, consume API, cachea y formatea UI, ya tiene varias responsabilidades mezcladas.</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">Ejemplo Flutter</div>
+                <div class="answer-copy">Un BLoC no debería también hacer parsing HTTP o manejar SQLite. El BLoC orquesta estado; el Repository obtiene datos; el servicio especializado maneja infraestructura.</div>
+              </div>
+              <div class="answer-box full">
+                <div class="mini-label">Cómo llevarlo a tu experiencia</div>
+                <div class="answer-copy quote">En Itaú nos funcionó mucho separar estado, networking, sesión y cifrado. Eso nos dio código más testeable y redujo bugs cuando cambiaban reglas del negocio o integraciones.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="open closed ocp interfaces contratos flutter">
+          <button class="question-head" type="button">
+            <span class="card-id">SOLID 03</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Open/Closed Principle</span>
+              <span class="question-subtitle">Cómo explicarlo desde extensibilidad y menor riesgo.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">La idea es que una pieza esté abierta para extensión pero cerrada para modificación. O sea, si debo soportar un nuevo método de pago o una nueva fuente de datos, lo ideal es agregar una implementación nueva sobre un contrato existente y no reescribir la lógica estable. Esto reduce regresiones y hace más segura la evolución del sistema.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="liskov substitution principle lsp herencia contrato flutter">
+          <button class="question-head" type="button">
+            <span class="card-id">SOLID 04</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Liskov Substitution Principle</span>
+              <span class="question-subtitle">La forma más simple de decirlo es hablar de contrato esperado.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">Si una clase hija reemplaza a la padre, el sistema debe seguir funcionando sin comportamientos inesperados. Lo importante no es la herencia por sí sola, sino respetar el contrato. Si una subclase cambia reglas esenciales o rompe expectativas, está violando Liskov.</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">Cómo aterrizarlo</div>
+                <div class="answer-copy">Lo menciono sobre todo para decir que prefiero composición sobre herencia cuando la herencia empieza a forzar comportamientos raros.</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">Señal senior</div>
+                <div class="answer-copy">No trato de usar herencia solo porque exista; si el contrato no es claro, prefiero interfaces y composición.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="interface segregation principle isp segregacion de interfaces repositorios contratos testing">
+          <button class="question-head" type="button">
+            <span class="card-id">SOLID 05</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Segregación de interfaces</span>
+              <span class="question-subtitle">Te conviene ligarla a testing y a dependencias más limpias.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">Interface Segregation dice que es mejor tener contratos pequeños y específicos que una interfaz gigante obligando a implementar métodos que no aplican. En Flutter lo conecto mucho con repositorios y servicios: una capa debería depender solo del contrato mínimo que necesita. Eso baja acoplamiento, simplifica mocks y deja más claro el rol de cada dependencia.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="dependency inversion principle dip dependency injection flutter testing abstractions">
+          <button class="question-head" type="button">
+            <span class="card-id">SOLID 06</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Dependency Inversion Principle</span>
+              <span class="question-subtitle">Tu mejor conexión aquí es testabilidad y cambio de entornos.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box">
+                <div class="mini-label">Definición</div>
+                <div class="answer-copy">Los módulos de alto nivel no deberían depender de implementaciones concretas, sino de abstracciones. Eso permite cambiar implementaciones sin tocar la lógica principal.</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">Ejemplo Flutter</div>
+                <div class="answer-copy">Un LoginBloc no debería crear directamente Dio o FirebaseAuth. Debería depender de AuthRepository o AuthService y recibirlo por inyección.</div>
+              </div>
+              <div class="answer-box full">
+                <div class="mini-label">Tu respuesta fuerte</div>
+                <div class="answer-copy quote">Para mí DIP es de los principios más valiosos porque impacta directamente el testing y la flexibilidad. En proyectos como Itaú nos permitía cambiar implementaciones por ambiente, mockear dependencias y mantener el BLoC limpio de detalles de infraestructura.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="flutter">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Bloque 03</div>
+          <h2>Flutter core</h2>
+          <p>Fundamentos de framework, árboles, widgets, renderizado y arranque de la app.</p>
+        </div>
+        <div class="section-count">7 preguntas clave</div>
+      </div>
+
+      <div class="question-list">
+        <article class="question-card" data-search="flutter arquitectura framework que es flutter main dart runapp">
+          <button class="question-head" type="button">
+            <span class="card-id">CORE 01</span>
+            <span class="question-title-wrap">
+              <span class="question-title">¿Qué es Flutter y cómo describirías su arquitectura?</span>
+              <span class="question-subtitle">Responde pensando en framework UI, motor propio y enfoque declarativo.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">Flutter es un framework UI de Google para construir aplicaciones multiplataforma desde una sola base de código. Su arquitectura combina un framework declarativo en Dart con un motor de renderizado propio, lo que le permite dibujar la interfaz sin depender de widgets nativos del sistema operativo. Eso da consistencia visual, buen rendimiento y control fino sobre layout y rendering.</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">Extra útil</div>
+                <div class="answer-copy">Si quieres sonar más fuerte, menciona que Flutter desacopla framework, engine y embedder.</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">Tu experiencia</div>
+                <div class="answer-copy">Tu CV ya apunta a trabajo multiplataforma, lo cual te deja decir que valoras la consistencia entre mobile, web y desktop.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="main dart runapp punto de entrada flutter">
+          <button class="question-head" type="button">
+            <span class="card-id">CORE 02</span>
+            <span class="question-title-wrap">
+              <span class="question-title">main.dart como punto de entrada y runApp()</span>
+              <span class="question-subtitle">Concepto sencillo, pero responde con claridad.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">main.dart suele ser el punto de entrada porque contiene la función main(), que es la primera que ejecuta Dart. Desde ahí normalmente inicializas dependencias, bindings, configuración y finalmente llamas runApp(), que monta el widget raíz de la aplicación. A partir de ahí Flutter construye el árbol de widgets y arranca el ciclo de renderizado.</div>
+                <div class="code">void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await configureDependencies();
+  runApp(const MyApp());
+}</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="tres arboles flutter widget tree element tree render tree">
+          <button class="question-head" type="button">
+            <span class="card-id">CORE 03</span>
+            <span class="question-title-wrap">
+              <span class="question-title">¿Cuáles son los 3 árboles fundamentales de Flutter?</span>
+              <span class="question-subtitle">Esta es de las más clásicas y te conviene responderla muy limpia.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box">
+                <div class="mini-label">Respuesta corta</div>
+                <div class="answer-copy">Widget Tree, Element Tree y Render Tree.</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">Cómo explicarlos</div>
+                <div class="answer-copy">El Widget Tree describe la UI y es inmutable; el Element Tree mantiene la relación viva entre widgets y estado; el Render Tree es el que hace layout, painting y hit testing.</div>
+              </div>
+              <div class="answer-box full">
+                <div class="mini-label">Cómo sonar senior</div>
+                <div class="answer-copy">Entender estos árboles sirve para explicar por qué Flutter puede reconstruir widgets con frecuencia sin necesariamente redibujar todo. Cuando el framework reutiliza elementos y render objects, el costo real baja bastante si la estructura está bien hecha.</div>
+              </div>
+              <div class="answer-box full">
+                <div class="mini-label">Tu experiencia</div>
+                <div class="answer-copy quote">En proyectos con UI compleja y listas largas me ha servido entender esto para evitar rebuilds innecesarios, usar const donde aplica y segmentar mejor la pantalla.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="widget mutable inmutable stateful stateless state build setstate">
+          <button class="question-head" type="button">
+            <span class="card-id">CORE 04</span>
+            <span class="question-title-wrap">
+              <span class="question-title">¿Un widget es mutable o inmutable, y por qué?</span>
+              <span class="question-subtitle">Conecta la respuesta con State y Element Tree.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">Los widgets son inmutables. En Flutter un widget es más una descripción de configuración de la UI que un objeto que cambia internamente. Lo mutable vive en State, que se asocia al Element Tree y puede persistir entre reconstrucciones. Eso hace que el modelo sea más predecible y declarativo.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="statelesswidget vs statefulwidget build setstate flutter">
+          <button class="question-head" type="button">
+            <span class="card-id">CORE 05</span>
+            <span class="question-title-wrap">
+              <span class="question-title">StatelessWidget vs StatefulWidget, build() y setState()</span>
+              <span class="question-subtitle">Te van a medir si sabes separar estado local de estado de aplicación.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box">
+                <div class="mini-label">Stateless</div>
+                <div class="answer-copy">Lo uso cuando la UI depende solo de inputs externos y no tiene estado interno mutable.</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">Stateful</div>
+                <div class="answer-copy">Lo uso para estado local y efímero: controladores, animaciones, tabs internos, formularios pequeños.</div>
+              </div>
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta senior</div>
+                <div class="answer-copy">En arquitectura limpia trato de que la mayoría de la UI sea Stateless y que el estado importante viva en Cubit o BLoC. setState() sigue siendo válido, pero para estado muy local. Cuando el estado tiene reglas, ciclos de vida o efectos laterales, lo saco de la vista.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="motor renderizado flutter skia impeller">
+          <button class="question-head" type="button">
+            <span class="card-id">CORE 06</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Motor de renderizado de Flutter</span>
+              <span class="question-subtitle">Responde con Skia, Impeller y por qué importa.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">Flutter históricamente ha usado Skia como motor de renderizado, y en versiones más recientes ha impulsado Impeller para mejorar previsibilidad y reducir jank por compilación de shaders, especialmente en iOS. Lo importante es entender que Flutter dibuja su UI con un engine propio, no usando componentes nativos del sistema.</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">Cómo aterrizarlo</div>
+                <div class="answer-copy">Esto explica por qué puedes lograr la misma UI en varias plataformas y por qué DevTools ayuda tanto a perfilar frames y rendering.</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">Tu experiencia</div>
+                <div class="answer-copy">En tu narrativa puedes decir que monitoreaste rendimiento y rebuilds con DevTools en apps reales.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="globalkey keys contexto flutter">
+          <button class="question-head" type="button">
+            <span class="card-id">CORE 07</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Keys, GlobalKey y contexto</span>
+              <span class="question-subtitle">Úsalo para mostrar que entiendes identidad de widgets y no solo UI.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">Las Keys ayudan a que Flutter identifique widgets entre rebuilds, especialmente en listas o cuando cambia el orden de elementos. GlobalKey además permite acceder al estado o contexto asociado a un widget específico, aunque trato de usarla con moderación porque si abusas de ella puedes acoplar demasiado la UI o afectar rendimiento.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="state">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Bloque 04</div>
+          <h2>Manejo de estado</h2>
+          <p>BLoC, Cubit, BlocBuilder, BlocListener, MultiBlocProvider, inmutabilidad y organización por capas.</p>
+        </div>
+        <div class="section-count">6 preguntas clave</div>
+      </div>
+
+      <div class="question-list">
+        <article class="question-card" data-search="bloc vs cubit diferencia bloc cubit flutter blocbuilder listener">
+          <button class="question-head" type="button">
+            <span class="card-id">STATE 01</span>
+            <span class="question-title-wrap">
+              <span class="question-title">¿Qué diferencia hay entre BLoC y Cubit?</span>
+              <span class="question-subtitle">Te conviene hablar de complejidad del flujo y no solo de boilerplate.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box">
+                <div class="mini-label">Cubit</div>
+                <div class="answer-copy">Es más directo. Expones métodos y emites estados. Lo prefiero cuando la lógica es simple y el flujo es corto.</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">BLoC</div>
+                <div class="answer-copy">Introduce eventos como entrada. Eso agrega estructura útil cuando el flujo tiene múltiples disparadores, validaciones, side effects o reglas complejas.</div>
+              </div>
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta senior</div>
+                <div class="answer-copy">No es que uno sea mejor que el otro; son herramientas para distintos niveles de complejidad. En flujos como autenticación o sesión, BLoC suele dar mejor trazabilidad. Para estados de pantalla más simples, Cubit reduce ruido sin perder claridad.</div>
+              </div>
+              <div class="answer-box full">
+                <div class="mini-label">Tu experiencia</div>
+                <div class="answer-copy quote">En Itaú usábamos BLoC para autenticación y flujos con varios eventos, mientras que para preferencias o estados más simples Cubit nos daba la misma claridad con menos boilerplate.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="blocbuilder bloclistener blocconsumer listenwhen buildwhen">
+          <button class="question-head" type="button">
+            <span class="card-id">STATE 02</span>
+            <span class="question-title-wrap">
+              <span class="question-title">BlocBuilder vs BlocListener vs BlocConsumer</span>
+              <span class="question-subtitle">Pregunta clásica para ver si entiendes UI reactiva y side effects.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box">
+                <div class="mini-label">BlocBuilder</div>
+                <div class="answer-copy">Lo uso para reconstruir UI cuando cambia el estado.</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">BlocListener</div>
+                <div class="answer-copy">Lo uso para side effects: navegación, snackbars, diálogos, tracking.</div>
+              </div>
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta senior</div>
+                <div class="answer-copy">Lo importante es no mezclar reconstrucción visual con efectos laterales. Cuando ambas cosas conviven en un flujo, BlocConsumer suele ser la opción práctica. buildWhen y listenWhen ayudan a reducir rebuilds y a reaccionar solo a estados relevantes.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="multiblocprovider context read watch select flutter bloc">
+          <button class="question-head" type="button">
+            <span class="card-id">STATE 03</span>
+            <span class="question-title-wrap">
+              <span class="question-title">MultiBlocProvider, context.read() y organización de dependencias</span>
+              <span class="question-subtitle">Buena para mostrar orden y escalabilidad.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">MultiBlocProvider sirve para proveer varios BLoCs o Cubits de forma más limpia y evitar anidamientos incómodos. context.read() lo uso para acceder a una instancia sin suscribirme a cambios, generalmente para disparar eventos. Cuando quiero reaccionar a cambios de estado, uso Builder o mecanismos que sí escuchen el stream de estados. La idea es mantener la composición clara y evitar dependencias escondidas.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="equatable inmutabilidad estados flutter bloc">
+          <button class="question-head" type="button">
+            <span class="card-id">STATE 04</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Equatable e inmutabilidad de estados</span>
+              <span class="question-subtitle">Otra oportunidad para conectar con rendimiento y previsibilidad.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">En BLoC y Cubit conviene que los estados sean inmutables porque eso hace más claro cada cambio y evita efectos laterales. Equatable ayuda a comparar estados por valor en lugar de referencia, lo que reduce emisiones o rebuilds innecesarios y facilita razonamiento sobre el estado actual del sistema.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="repository architecture ui bloc repository clean architecture api where should api calls go">
+          <button class="question-head" type="button">
+            <span class="card-id">STATE 05</span>
+            <span class="question-title-wrap">
+              <span class="question-title">¿Dónde deben ir las llamadas a API en Flutter?</span>
+              <span class="question-subtitle">Aquí te conviene contestar arquitectura, no solo ubicación.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">Normalmente las llamadas a API no deberían vivir ni en la UI ni directamente en el BLoC. Lo más sano es que estén detrás de un Repository o una capa de datos que abstraiga la fuente real. Así la UI se enfoca en presentar, el BLoC en orquestar estado y reglas, y la infraestructura queda encapsulada y fácil de reemplazar o testear.</div>
+              </div>
+              <div class="answer-box full">
+                <div class="mini-label">Tu experiencia</div>
+                <div class="answer-copy quote">En tu experiencia bancaria y en proyectos como Hexa, esa separación permitió cambiar backend o ambiente sin tocar la capa de presentación.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="clean architecture ui bloc repository data source flutter senior">
+          <button class="question-head" type="button">
+            <span class="card-id">STATE 06</span>
+            <span class="question-title-wrap">
+              <span class="question-title">¿Cómo explicas una arquitectura limpia en Flutter?</span>
+              <span class="question-subtitle">Pregunta muy probable si te evalúan a nivel senior.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta senior</div>
+                <div class="answer-copy">La explico como una separación consciente de responsabilidades. La capa de presentación contiene widgets y estado visual; la capa de dominio o aplicación concentra casos de uso y reglas del negocio; la capa de datos resuelve APIs, cache o bases locales. En Flutter esa idea suele verse como UI, BLoC/Cubit, Repository y data sources. El objetivo no es cumplir un diagrama, sino aislar cambios, facilitar tests y evitar que la vista conozca detalles de infraestructura.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="dart">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Bloque 05</div>
+          <h2>Dart, asincronía y concurrencia</h2>
+          <p>Future, Stream, async/await, isolates, CancelToken, tipos e inmutabilidad de referencia.</p>
+        </div>
+        <div class="section-count">6 preguntas clave</div>
+      </div>
+
+      <div class="question-list">
+        <article class="question-card" data-search="future vs stream async await streambuilder flutter dart">
+          <button class="question-head" type="button">
+            <span class="card-id">DART 01</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Future vs Stream</span>
+              <span class="question-subtitle">Una sola respuesta, pero con casos de uso reales.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box">
+                <div class="mini-label">Future</div>
+                <div class="answer-copy">Representa un único resultado futuro. Es ideal para una llamada HTTP, login o lectura puntual de datos.</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">Stream</div>
+                <div class="answer-copy">Representa una secuencia de valores en el tiempo. Lo usaría en sockets, sensores, ubicación o eventos continuos.</div>
+              </div>
+              <div class="answer-box full">
+                <div class="mini-label">Tu experiencia</div>
+                <div class="answer-copy quote">En GreenWall puedes decir que manejaste lectura continua de señales como flujo de eventos, mientras que en consumo REST o autenticación trabajabas con Future y async/await.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="isolate dart que caracteriza isolate compute paralelismo real">
+          <button class="question-head" type="button">
+            <span class="card-id">DART 02</span>
+            <span class="question-title-wrap">
+              <span class="question-title">¿Qué caracteriza un isolate en Dart?</span>
+              <span class="question-subtitle">Te conviene remarcar memoria aislada y paso por mensajes.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">Un isolate es la unidad de concurrencia real en Dart. Cada isolate tiene su propia memoria y no comparte heap con otros; se comunican mediante mensajes. Eso lo hace muy útil para trabajo pesado de CPU que no quieres ejecutar en el main isolate porque bloquearía la UI. async/await ayuda con concurrencia no bloqueante, pero no crea paralelismo real; los isolates sí.</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">Cuándo usarlo</div>
+                <div class="answer-copy">Parsing pesado, compresión, encriptación, procesamiento de archivos o imágenes.</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">Ejemplo</div>
+                <div class="answer-copy">compute() es la forma más simple cuando la tarea cabe en un patrón request/response.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="cancel token dio que es para que se usa cancelar request flutter">
+          <button class="question-head" type="button">
+            <span class="card-id">DART 03</span>
+            <span class="question-title-wrap">
+              <span class="question-title">¿Qué es un CancelToken y para qué se usa?</span>
+              <span class="question-subtitle">Te conviene explicarlo desde coherencia de estado y UX.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">En Dio, un CancelToken permite cancelar una petición HTTP que sigue en curso. Sirve mucho cuando el usuario cambia de pantalla, hace una nueva búsqueda o el resultado anterior ya no es relevante. Más que un detalle técnico, ayuda a evitar estados obsoletos, errores de UI y consumo innecesario de red.</div>
+              </div>
+              <div class="answer-box full">
+                <div class="mini-label">Tu experiencia</div>
+                <div class="answer-copy quote">En flujos bancarios tiene bastante sentido cancelar requests si el usuario cambia de paso o retrocede, para evitar que una respuesta tardía pise un estado más reciente.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="async await event loop dart concurrency">
+          <button class="question-head" type="button">
+            <span class="card-id">DART 04</span>
+            <span class="question-title-wrap">
+              <span class="question-title">async/await en Dart y el event loop</span>
+              <span class="question-subtitle">Útil para mostrar que entiendes concurrencia más allá de la sintaxis.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">async/await simplifica el manejo de operaciones asíncronas sobre el event loop de Dart. No crea nuevos threads ni isolates; solo permite escribir lógica no bloqueante de forma más legible. Lo importante es saber cuándo basta con asincronía y cuándo necesitas mover trabajo a otro isolate porque ya es CPU-bound.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="final const dynamic types dart buenas practicas">
+          <button class="question-head" type="button">
+            <span class="card-id">DART 05</span>
+            <span class="question-title-wrap">
+              <span class="question-title">final, const y buenas prácticas de tipos en Dart</span>
+              <span class="question-subtitle">Tema simple, pero aquí puedes reflejar disciplina de código.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box">
+                <div class="mini-label">final</div>
+                <div class="answer-copy">La referencia no cambia después de asignarse, aunque el objeto podría ser mutable.</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">const</div>
+                <div class="answer-copy">El valor es constante en tiempo de compilación. En Flutter ayuda además con optimización de widgets.</div>
+              </div>
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta senior</div>
+                <div class="answer-copy">Intento ser explícito con tipos y limitar el uso de dynamic porque mejora legibilidad, seguridad y tooling. También uso const siempre que aplica en widgets para evitar trabajo innecesario del framework.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="methodchannel dart ios android nativo flutter bluetooth">
+          <button class="question-head" type="button">
+            <span class="card-id">DART 06</span>
+            <span class="question-title-wrap">
+              <span class="question-title">MethodChannel y comunicación con código nativo</span>
+              <span class="question-subtitle">Útil para conectar con GreenWall y hardware.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">MethodChannel es el mecanismo para invocar funcionalidades nativas desde Dart y recibir respuesta. Lo usaría cuando Flutter por sí solo no cubre una necesidad o cuando necesito acceder a capacidades específicas del SO, SDKs nativos o hardware. Lo importante es mantener esa frontera bien encapsulada para que la app Flutter no quede acoplada a detalles nativos.</div>
+              </div>
+              <div class="answer-box full">
+                <div class="mini-label">Tu experiencia</div>
+                <div class="answer-copy quote">En GreenWall lo puedes conectar con integración BLE o comunicación con componentes del sistema para recibir señales del microcontrolador de forma controlada.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="patterns">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Bloque 06</div>
+          <h2>Patrones de diseño</h2>
+          <p>Qué son, para qué sirven y cómo conectarlos con problemas recurrentes de código en Flutter.</p>
+        </div>
+        <div class="section-count">4 preguntas clave</div>
+      </div>
+
+      <div class="question-list">
+        <article class="question-card" data-search="patron de diseno que es flutter design patterns observer strategy command mediator decorator">
+          <button class="question-head" type="button">
+            <span class="card-id">PAT 01</span>
+            <span class="question-title-wrap">
+              <span class="question-title">¿Qué es un patrón de diseño y cuáles se usan en Flutter?</span>
+              <span class="question-subtitle">No lo vendas como receta mágica; véndelo como solución recurrente.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">Un patrón de diseño es una solución recurrente a un problema frecuente de diseño de software. No es una implementación exacta, sino una guía para resolver problemas de acoplamiento, creación, comunicación o extensión. En Flutter se ven mucho Observer, Strategy, Mediator, Command, Decorator, Composite, Factory y Singleton, dependiendo del contexto.</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">Cómo sonar senior</div>
+                <div class="answer-copy">Lo importante no es memorizar nombres, sino entender qué problema resuelve cada patrón y cuándo sí vale la pena aplicarlo.</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">Tu conexión</div>
+                <div class="answer-copy">Puedes hablar de BLoC como Mediator/Observer y de repositorios inyectables como una forma de Strategy.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="mediator pattern flutter bloc mediator">
+          <button class="question-head" type="button">
+            <span class="card-id">PAT 02</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Patrones no creacionales: Mediator</span>
+              <span class="question-subtitle">Una de las preguntas que mencionaste explícitamente.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">Mediator busca reducir el acoplamiento entre componentes haciendo que se comuniquen a través de un coordinador central en lugar de hablar entre sí directamente. En Flutter, BLoC encaja muy bien con esa idea porque centraliza eventos, reglas y estados, y evita que los widgets se conozcan o se dependan mutuamente.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="observer strategy command flutter bloc streams">
+          <button class="question-head" type="button">
+            <span class="card-id">PAT 03</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Observer, Strategy y Command en Flutter</span>
+              <span class="question-subtitle">Respuesta compacta para varias preguntas de una vez.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box">
+                <div class="mini-label">Observer</div>
+                <div class="answer-copy">Se observa mucho en Streams, ChangeNotifier y BLoC, donde varios listeners reaccionan a cambios de estado.</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">Strategy</div>
+                <div class="answer-copy">Sirve para intercambiar implementaciones o algoritmos. Por ejemplo, usar distintos repositorios según entorno o fuente de datos.</div>
+              </div>
+              <div class="answer-box full">
+                <div class="mini-label">Command</div>
+                <div class="answer-copy">Encapsula una intención o acción. En BLoC, los eventos cumplen muy bien ese rol porque representan acciones del usuario o del sistema que disparan comportamiento.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="decorator composite singleton get it flutter">
+          <button class="question-head" type="button">
+            <span class="card-id">PAT 04</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Otros patrones que puedes mencionar con seguridad</span>
+              <span class="question-subtitle">Para ampliar si te repreguntan.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="quick-grid">
+              <div class="quick-card">
+                <h3>Decorator</h3>
+                <p>Muy visible en Flutter cuando envuelves widgets con Padding, Opacity, InkWell o DecoratedBox para añadir comportamiento o apariencia.</p>
+              </div>
+              <div class="quick-card">
+                <h3>Composite</h3>
+                <p>El Widget Tree es una expresión natural de Composite: tratas grupos y elementos individuales bajo la misma idea estructural.</p>
+              </div>
+              <div class="quick-card">
+                <h3>Singleton</h3>
+                <p>Puede aparecer en servicios globales o locators, pero conviene usarlo con cuidado para no ocultar dependencias.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="performance">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Bloque 07</div>
+          <h2>Performance y mantenibilidad</h2>
+          <p>Rendimiento de app, estrategias para evitar refactor caro, complejidad ciclomática y uso de DevTools.</p>
+        </div>
+        <div class="section-count">4 preguntas clave</div>
+      </div>
+
+      <div class="question-list">
+        <article class="question-card" data-search="performance flutter lazy load cache rebuilds devtools optimize rendimiento">
+          <button class="question-head" type="button">
+            <span class="card-id">PERF 01</span>
+            <span class="question-title-wrap">
+              <span class="question-title">¿Qué estrategias usas para optimizar desempeño y evitar refactors caros?</span>
+              <span class="question-subtitle">Esta es de criterio técnico. Aquí vale mucho hablar de anticipación.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="quick-grid">
+              <div class="quick-card">
+                <h3>Diseño por capas</h3>
+                <p>Separar UI, lógica y datos desde el inicio evita refactors cuando cambia el backend o crece la app.</p>
+              </div>
+              <div class="quick-card">
+                <h3>Lazy loading</h3>
+                <p>ListView.builder, paginación y carga diferida de recursos para no construir ni descargar de más.</p>
+              </div>
+              <div class="quick-card">
+                <h3>Caché</h3>
+                <p>Cache local, repositorios con estrategias de lectura y librerías como cached_network_image cuando aplica.</p>
+              </div>
+              <div class="quick-card">
+                <h3>Rebuilds controlados</h3>
+                <p>const widgets, split de pantallas, buildWhen, select y segmentación del estado para no redibujar todo.</p>
+              </div>
+              <div class="quick-card">
+                <h3>Trabajo pesado fuera del main isolate</h3>
+                <p>Si una operación es CPU-bound, la saco del hilo principal para no comprometer la experiencia de usuario.</p>
+              </div>
+              <div class="quick-card">
+                <h3>Observabilidad</h3>
+                <p>Uso DevTools, logs y métricas para detectar jank, leaks o reconstrucciones innecesarias antes de que escalen.</p>
+              </div>
+            </div>
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta senior</div>
+                <div class="answer-copy">Para mí optimizar no es solo hacer una pantalla más rápida, sino diseñar para que el sistema crezca bien. Por eso pienso en lazy loading, cache, modularidad, contratos estables, control de rebuilds y medición real con DevTools. Si una app está bien estructurada desde temprano, luego no necesitas refactors traumáticos cada vez que aparece una nueva necesidad del negocio.</div>
+              </div>
+              <div class="answer-box full">
+                <div class="mini-label">Tu experiencia</div>
+                <div class="answer-copy quote">Puedes apoyarte en el caso de listas largas y jank en banca, donde usar ListView.builder, filtrar rebuilds y aislar mejor el estado ayudó a bajar costo de render.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="devtools webtools flutter performance memory network widget inspector">
+          <button class="question-head" type="button">
+            <span class="card-id">PERF 02</span>
+            <span class="question-title-wrap">
+              <span class="question-title">¿Has usado Flutter DevTools o WebTools? ¿Cuáles?</span>
+              <span class="question-subtitle">Aquí conviene dar nombres concretos y para qué sirven.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="summary-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Herramienta</th>
+                    <th>Para qué la has usado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Widget Inspector</td>
+                    <td>Revisar jerarquía de widgets, layout y detectar reconstrucciones o estructuras innecesarias.</td>
+                  </tr>
+                  <tr>
+                    <td>Performance</td>
+                    <td>Analizar frames, jank, actividad del UI thread y timing de rendering.</td>
+                  </tr>
+                  <tr>
+                    <td>Memory</td>
+                    <td>Buscar growth anómalo, allocations o posibles leaks.</td>
+                  </tr>
+                  <tr>
+                    <td>Network</td>
+                    <td>Ver requests, tiempos y comportamiento de llamadas.</td>
+                  </tr>
+                  <tr>
+                    <td>Debugger / logs</td>
+                    <td>Seguir flujos, variables y secuencias de eventos o estados.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="note-panel">
+              <h3>Respuesta recomendada</h3>
+              <p>Sí, he usado Flutter DevTools principalmente para diagnosticar problemas de rendimiento, revisar rebuilds, analizar memoria e inspeccionar requests y logs durante debugging. Lo valioso no es solo abrir la herramienta, sino saber interpretarla para decidir qué optimizar primero.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="complejidad ciclomatica que es clean code testing maintainability">
+          <button class="question-head" type="button">
+            <span class="card-id">PERF 03</span>
+            <span class="question-title-wrap">
+              <span class="question-title">¿Qué es la complejidad ciclomática?</span>
+              <span class="question-subtitle">Pregunta teórica con una lectura muy práctica.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">La complejidad ciclomática mide cuántos caminos lógicos diferentes tiene una función o bloque de código. Mientras más ramas, más difícil es entenderlo, testearlo y mantenerlo. No la veo como una métrica aislada, sino como una señal de que quizás una función está cargando demasiada responsabilidad y conviene dividirla.</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">Cómo sonar senior</div>
+                <div class="answer-copy">La relaciono con costo de testing y riesgo de regresión, no solo con estilo.</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">Tu experiencia</div>
+                <div class="answer-copy">En code review puedes decir que una señal de refactor era ver demasiados if anidados o una función difícil de cubrir con tests.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="const repaintboundary cached network image listview builder buildwhen performance">
+          <button class="question-head" type="button">
+            <span class="card-id">PERF 04</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Optimizaciones concretas que puedes nombrar en Flutter</span>
+              <span class="question-subtitle">Lista rápida para repasar antes de una entrevista.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="chip-row">
+              <span class="pill">const constructors</span>
+              <span class="pill">ListView.builder</span>
+              <span class="pill">paginación</span>
+              <span class="pill">cached data</span>
+              <span class="pill">buildWhen / select</span>
+              <span class="pill">RepaintBoundary</span>
+              <span class="pill">memo de recursos caros</span>
+              <span class="pill">aislar CPU work</span>
+              <span class="pill">profilar antes de optimizar</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="testing">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Bloque 08</div>
+          <h2>Testing</h2>
+          <p>Librerías, mocks, TDD, testabilidad y cómo explicarlo con enfoque senior.</p>
+        </div>
+        <div class="section-count">4 preguntas clave</div>
+      </div>
+
+      <div class="question-list">
+        <article class="question-card" data-search="librerias pruebas unitarias flutter_test mocktail mockito bloc_test integration_test">
+          <button class="question-head" type="button">
+            <span class="card-id">TEST 01</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Librerías para pruebas unitarias en Flutter</span>
+              <span class="question-subtitle">Una de las preguntas que mencionaste tal cual.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="quick-grid">
+              <div class="quick-card">
+                <h3>flutter_test</h3>
+                <p>Base para unit tests y widget tests; viene en el ecosistema Flutter.</p>
+              </div>
+              <div class="quick-card">
+                <h3>bloc_test</h3>
+                <p>Muy útil para verificar secuencias de estados en BLoC o Cubit.</p>
+              </div>
+              <div class="quick-card">
+                <h3>mocktail o mockito</h3>
+                <p>Para mocks y stubs de repositorios, servicios o gateways externos.</p>
+              </div>
+              <div class="quick-card">
+                <h3>integration_test</h3>
+                <p>Para flujos end-to-end o de integración con interfaz real.</p>
+              </div>
+            </div>
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">Para pruebas unitarias normalmente trabajo con flutter_test como base, bloc_test cuando quiero validar secuencias de estado y mocktail o mockito para aislar dependencias. Si hablamos de pruebas más integradas o end-to-end, integration_test también entra en juego. Mi criterio es probar lógica donde más valor aporta y diseñar la arquitectura para que esos tests sean fáciles de escribir.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="tdd senior testing clean code mocks repositories">
+          <button class="question-head" type="button">
+            <span class="card-id">TEST 02</span>
+            <span class="question-title-wrap">
+              <span class="question-title">¿Has trabajado con TDD o cómo entiendes el testing a nivel senior?</span>
+              <span class="question-subtitle">Aquí importa tu criterio, no vender dogmas.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">Veo el testing como una forma de asegurar comportamiento y permitir cambios con más confianza. TDD puede ser muy útil cuando las reglas de negocio están claras o cuando quieres diseñar APIs más limpias desde el inicio, pero tampoco lo trato como dogma. Lo importante es que la arquitectura facilite pruebas aisladas y que la cobertura se concentre donde el riesgo y el valor son más altos.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="codigo testeable que hace codigo testeable separacion dependencias senior">
+          <button class="question-head" type="button">
+            <span class="card-id">TEST 03</span>
+            <span class="question-title-wrap">
+              <span class="question-title">¿Qué hace que un código sea testeable?</span>
+              <span class="question-subtitle">Pregunta muy buena para medir arquitectura.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">Que tenga responsabilidades claras, pocas dependencias ocultas, contratos bien definidos y lógica desacoplada de la infraestructura y de la UI. Si una clase instancia todo internamente, toca red, base de datos y además maneja presentación, se vuelve difícil de aislar. Cuando aplicas DIP, SRP y repositorios limpios, escribir tests deja de ser doloroso.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="ci cd tests pr pipeline flutter itau">
+          <button class="question-head" type="button">
+            <span class="card-id">TEST 04</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Cómo conectar testing con tu experiencia</span>
+              <span class="question-subtitle">Respuesta breve lista para usar.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="note-panel">
+              <h3>Respuesta sugerida</h3>
+              <p>En proyectos como Itaú el testing era importante no solo por calidad técnica, sino por el costo de un error en producción. Por eso trabajábamos con capas desacopladas, mocks de repositorios y ejecución de pruebas en CI/CD para validar cambios antes de mergear o liberar.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="algoritmos">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Bloque 09</div>
+          <h2>Algoritmos, estructuras y pensamiento técnico</h2>
+          <p>Fundamentos de programación, complejidad, sliding window, strings, arrays, stacks, queues y cómo explicarlo con naturalidad.</p>
+        </div>
+        <div class="section-count">5 preguntas clave</div>
+      </div>
+
+      <div class="question-list">
+        <article class="question-card" data-search="big o complejidad algoritmica o n o log n o n log n senior">
+          <button class="question-head" type="button">
+            <span class="card-id">ALGO 01</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Cómo hablar de complejidad algorítmica sin trabarte</span>
+              <span class="question-subtitle">Si puedes explicar esto bien, subes bastante el nivel percibido.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="summary-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Complejidad</th>
+                    <th>Cuándo aparece</th>
+                    <th>Cómo decirlo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>O(1)</td>
+                    <td>Acceso directo, lookup ideal</td>
+                    <td>Tiempo constante, no crece con la entrada.</td>
+                  </tr>
+                  <tr>
+                    <td>O(n)</td>
+                    <td>Recorres la colección una vez</td>
+                    <td>Es lineal, escala de forma predecible.</td>
+                  </tr>
+                  <tr>
+                    <td>O(log n)</td>
+                    <td>Búsqueda binaria</td>
+                    <td>Reduces el espacio de búsqueda por mitades.</td>
+                  </tr>
+                  <tr>
+                    <td>O(n log n)</td>
+                    <td>Sorts eficientes</td>
+                    <td>Buena complejidad para ordenamiento general.</td>
+                  </tr>
+                  <tr>
+                    <td>O(n²)</td>
+                    <td>Bucles anidados</td>
+                    <td>Escala peor; si puedo, intento evitarlo.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="sliding window moving median heap priorityqueue">
+          <button class="question-head" type="button">
+            <span class="card-id">ALGO 02</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Sliding Window y Moving Median</span>
+              <span class="question-subtitle">Te sirve para preguntas de optimización y de estructuras.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box">
+                <div class="mini-label">Sliding Window</div>
+                <div class="answer-copy">La uso cuando necesito analizar subarreglos o substrings consecutivos sin recalcular todo desde cero. Suele bajar una solución de O(n²) a O(n).</div>
+              </div>
+              <div class="answer-box">
+                <div class="mini-label">Moving Median</div>
+                <div class="answer-copy">Es más complejo porque requiere mantener una ventana ordenada eficientemente. Ahí normalmente consideras heaps o estructuras balanceadas para evitar reordenar todo cada vez.</div>
+              </div>
+              <div class="answer-box full">
+                <div class="mini-label">Cómo sonar senior</div>
+                <div class="answer-copy">No basta con dar la solución; conviene explicar trade-offs. A veces una solución simple O(n * k log k) es aceptable por legibilidad si los tamaños son bajos; otras veces toca optimizar a O(n log k) con estructuras más sofisticadas.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="arrays strings stack queue regex split join trim">
+          <button class="question-head" type="button">
+            <span class="card-id">ALGO 03</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Fundamentos que más te pueden evaluar</span>
+              <span class="question-subtitle">Repaso rápido de arrays, strings, stack, queue y regex básica.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="chip-row">
+              <span class="pill">Arrays / List</span>
+              <span class="pill">Strings</span>
+              <span class="pill">split / join / trim</span>
+              <span class="pill">Regex básica</span>
+              <span class="pill">Stack LIFO</span>
+              <span class="pill">Queue FIFO</span>
+              <span class="pill">iteración eficiente</span>
+              <span class="pill">edge cases</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="invertir string filtrar consonantes dart ejercicios entrevista">
+          <button class="question-head" type="button">
+            <span class="card-id">ALGO 04</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Cómo resolver ejercicios simples sin parecer junior</span>
+              <span class="question-subtitle">El secreto está en comunicar criterio mientras codificas.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Frases que ayudan</div>
+                <div class="answer-copy">Antes de escribir código, confirmaría la firma y los casos borde. Luego explicaría una solución simple y su complejidad. Si hay tiempo, mencionaría cómo optimizarla. Eso demuestra pensamiento estructurado más que velocidad mecánica.</div>
+                <div class="code">"Primero valido entradas nulas o vacías, luego propongo una solución O(n). Si el volumen de datos creciera mucho, miraría una alternativa con mejor uso de memoria o con estructuras auxiliares según el caso."</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="pensamiento entrevista edge cases firmas incorrectas decisiones tecnicas">
+          <button class="question-head" type="button">
+            <span class="card-id">ALGO 05</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Pensamiento de entrevista: qué buscan mientras resuelves</span>
+              <span class="question-subtitle">Esto te puede cambiar completamente el desempeño.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <ul>
+              <li>Que detectes firmas o requisitos ambiguos antes de lanzarte a codificar.</li>
+              <li>Que nombres complejidad temporal y espacial.</li>
+              <li>Que consideres edge cases y valides supuestos.</li>
+              <li>Que separes solución simple de solución óptima y expliques el trade-off.</li>
+              <li>Que escribas código legible, no solo código que compila.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="arquitectura">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Bloque 10</div>
+          <h2>Arquitectura, escalabilidad y criterio senior</h2>
+          <p>Cómo hablar de desacoplamiento, trade-offs y crecimiento del producto.</p>
+        </div>
+        <div class="section-count">4 preguntas clave</div>
+      </div>
+
+      <div class="question-list">
+        <article class="question-card" data-search="trade offs simple vs optimo arquitectura limpia escalabilidad senior">
+          <button class="question-head" type="button">
+            <span class="card-id">ARCH 01</span>
+            <span class="question-title-wrap">
+              <span class="question-title">¿Cómo tomas decisiones entre una solución simple y una más óptima?</span>
+              <span class="question-subtitle">Muy buena para sonar maduro técnicamente.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">Normalmente empiezo por una solución clara y correcta, y luego evalúo si el contexto realmente justifica optimizar más. No siempre la solución más sofisticada es la mejor; depende del volumen de datos, criticidad del flujo, costo de mantenimiento y urgencia del negocio. Lo importante es elegir de forma consciente y poder defender el porqué.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="microservicios vs monolito frontend mobile integration backend">
+          <button class="question-head" type="button">
+            <span class="card-id">ARCH 02</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Microservicios vs monolito</span>
+              <span class="question-subtitle">Aunque seas mobile, conviene tener criterio aquí.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="quick-grid">
+              <div class="quick-card">
+                <h3>Monolito</h3>
+                <p>Suele ser más simple de arrancar, desplegar y mantener cuando el producto o el equipo aún no necesitan una separación fuerte.</p>
+              </div>
+              <div class="quick-card">
+                <h3>Microservicios</h3>
+                <p>Dan independencia y escalabilidad por dominio, pero añaden complejidad operativa, observabilidad y coordinación.</p>
+              </div>
+              <div class="quick-card">
+                <h3>Respuesta madura</h3>
+                <p>No hay ganador universal; depende del tamaño del producto, del equipo y del costo operativo aceptable.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="codigo limpio reusable maintainable senior">
+          <button class="question-head" type="button">
+            <span class="card-id">ARCH 03</span>
+            <span class="question-title-wrap">
+              <span class="question-title">¿Qué significa para ti código limpio y reutilizable?</span>
+              <span class="question-subtitle">Buena para unir clean code con negocio.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">Código limpio, para mí, es código que otro desarrollador puede leer, entender y cambiar sin miedo excesivo. Reutilizable no significa hiperabstracto; significa que resuelve bien una responsabilidad y puede adaptarse sin romper todo alrededor. Si una abstracción solo existe porque suena elegante pero nadie la necesita, probablemente no está agregando valor.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="arquitectura senior medir exito mantenibilidad testabilidad observabilidad">
+          <button class="question-head" type="button">
+            <span class="card-id">ARCH 04</span>
+            <span class="question-title-wrap">
+              <span class="question-title">¿Cómo sabes que una arquitectura va bien?</span>
+              <span class="question-subtitle">Pregunta menos común, pero muy potente.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <ul>
+              <li>Cuando agregar una feature no obliga a tocar demasiadas capas sin necesidad.</li>
+              <li>Cuando los tests son fáciles de escribir y mantener.</li>
+              <li>Cuando las responsabilidades están claras y la curva de entrada al proyecto no es caótica.</li>
+              <li>Cuando el equipo puede cambiar una implementación sin romper la lógica central.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="backend">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Bloque 11</div>
+          <h2>Backend y bases de datos</h2>
+          <p>Conceptos transversales que suelen aparecer incluso en entrevistas mobile.</p>
+        </div>
+        <div class="section-count">3 preguntas clave</div>
+      </div>
+
+      <div class="question-list">
+        <article class="question-card" data-search="sql vs nosql diferencias normalizacion entidad relacion">
+          <button class="question-head" type="button">
+            <span class="card-id">DATA 01</span>
+            <span class="question-title-wrap">
+              <span class="question-title">SQL vs NoSQL</span>
+              <span class="question-subtitle">No necesitas irte demasiado profundo, pero sí sonar claro.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="quick-grid">
+              <div class="quick-card">
+                <h3>SQL</h3>
+                <p>Modelo relacional, esquema más rígido, joins potentes, buena consistencia y consultas estructuradas.</p>
+              </div>
+              <div class="quick-card">
+                <h3>NoSQL</h3>
+                <p>Más flexible en esquema, útil para documentos, key-value o escalado específico según el caso.</p>
+              </div>
+              <div class="quick-card">
+                <h3>Respuesta madura</h3>
+                <p>No elijo por moda; depende del tipo de dato, consultas, consistencia requerida y evolución del producto.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="entidad relacion normalizacion conceptos entrevista">
+          <button class="question-head" type="button">
+            <span class="card-id">DATA 02</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Modelo entidad-relación y normalización</span>
+              <span class="question-subtitle">Te basta con un nivel conceptual limpio.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">Un modelo entidad-relación representa entidades del dominio, sus atributos y cómo se relacionan. La normalización busca reducir redundancia y mejorar integridad de datos separando la información en estructuras coherentes. No siempre se lleva al máximo grado porque también hay trade-offs de rendimiento, pero conceptualmente ayuda a diseñar bases consistentes.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="apis rest backend desacoplamiento frontend repository">
+          <button class="question-head" type="button">
+            <span class="card-id">DATA 03</span>
+            <span class="question-title-wrap">
+              <span class="question-title">APIs, escalabilidad y desacoplamiento desde mobile</span>
+              <span class="question-subtitle">Ideal para mostrar que entiendes integración, no solo UI.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="note-panel">
+              <h3>Respuesta sugerida</h3>
+              <p>Desde mobile valoro APIs consistentes, contratos claros, versionado cuidadoso y errores bien modelados. Cuando la app depende de repositorios y contratos estables, el frontend queda más desacoplado del backend y se reduce el impacto de cambios internos del servicio.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="workflow">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Bloque 12</div>
+          <h2>Git, workflow y delivery</h2>
+          <p>Versionado, PRs, Git Flow, trunk-based y cómo hablar de trabajo colaborativo.</p>
+        </div>
+        <div class="section-count">3 preguntas clave</div>
+      </div>
+
+      <div class="question-list">
+        <article class="question-card" data-search="git flow trunk based development prs merge conflicts ci cd">
+          <button class="question-head" type="button">
+            <span class="card-id">FLOW 01</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Git Flow vs Trunk-Based Development</span>
+              <span class="question-subtitle">Otra forma de mostrar criterio, no solo conocimiento de ramas.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="quick-grid">
+              <div class="quick-card">
+                <h3>Git Flow</h3>
+                <p>Más estructurado, útil cuando hay releases controlados, entornos y hotfixes bien marcados.</p>
+              </div>
+              <div class="quick-card">
+                <h3>Trunk-Based</h3>
+                <p>Más ágil, integración continua real y menor vida de ramas, pero exige disciplina y tests sólidos.</p>
+              </div>
+              <div class="quick-card">
+                <h3>Tu respuesta</h3>
+                <p>En banca suele tener sentido Git Flow adaptado por trazabilidad y control de releases; en equipos muy ágiles, trunk-based puede acelerar mucho.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="merge conflict pull request code review teamwork senior">
+          <button class="question-head" type="button">
+            <span class="card-id">FLOW 02</span>
+            <span class="question-title-wrap">
+              <span class="question-title">¿Cómo manejas PRs y conflictos de merge?</span>
+              <span class="question-subtitle">Mide colaboración y responsabilidad técnica.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">Trato de mantener ramas chicas y enfocadas para que los PRs sean revisables de verdad. Cuando hay conflictos, no los resuelvo mecánicamente; primero entiendo la intención de ambos cambios y luego valido que el flujo final siga coherente. También me importa dejar contexto claro en el PR para que la revisión sea técnica y no adivinanza.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="ci cd aws staging production release itau">
+          <button class="question-head" type="button">
+            <span class="card-id">FLOW 03</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Cómo conectar delivery con tu experiencia</span>
+              <span class="question-subtitle">Bloque listo para mencionar releases y entornos.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="note-panel">
+              <h3>Respuesta sugerida</h3>
+              <p>He trabajado con flujos donde los cambios pasan por PR, validaciones automatizadas y despliegues controlados hacia staging y producción. En entornos regulados como banca, esa disciplina es clave porque no se trata solo de entregar rápido, sino de entregar con trazabilidad y bajo riesgo.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="soft">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Bloque 13</div>
+          <h2>Comportamiento, mentalidad y nivel senior</h2>
+          <p>Cómo responder preguntas sobre trabajo en equipo, presión, organización, crecimiento y toma de decisiones.</p>
+        </div>
+        <div class="section-count">5 preguntas clave</div>
+      </div>
+
+      <div class="question-list">
+        <article class="question-card" data-search="deadline presion organizacion trabajo senior">
+          <button class="question-head" type="button">
+            <span class="card-id">SOFT 01</span>
+            <span class="question-title-wrap">
+              <span class="question-title">¿Cómo trabajas con deadlines y presión?</span>
+              <span class="question-subtitle">El foco es mostrar orden y criterio, no heroicidad.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">Cuando hay presión, trato de ordenar primero: qué es realmente crítico, qué puede postergarse y qué riesgos hay si recortamos. Prefiero negociar alcance con transparencia antes que prometer algo frágil. En general me funciona dividir entregas, asegurar lo esencial y mantener buena comunicación con producto y equipo.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="toma de decisiones logica emociones conflicto tecnico">
+          <button class="question-head" type="button">
+            <span class="card-id">SOFT 02</span>
+            <span class="question-title-wrap">
+              <span class="question-title">¿Cómo tomas decisiones técnicas cuando hay opiniones distintas?</span>
+              <span class="question-subtitle">Aquí debes sonar analítico y colaborativo.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">Intento bajar la discusión a criterios objetivos: impacto en mantenimiento, rendimiento, tiempo de entrega, riesgo y facilidad de prueba. No me interesa ganar la discusión, sino elegir la opción que mejor resuelva el problema real con el costo adecuado. Si hace falta, propongo una prueba pequeña o un spike para validar supuestos.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="adaptabilidad crecimiento aprendizaje feedback senior">
+          <button class="question-head" type="button">
+            <span class="card-id">SOFT 03</span>
+            <span class="question-title-wrap">
+              <span class="question-title">¿Cómo mantienes tu crecimiento técnico?</span>
+              <span class="question-subtitle">Respuesta útil para mostrar evolución continua.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="note-panel">
+              <h3>Respuesta sugerida</h3>
+              <p>Me gusta aprender desde problemas reales. Cuando un proyecto me exige rendimiento, testing o integración más compleja, profundizo ahí y luego convierto ese aprendizaje en mejores prácticas para futuros proyectos. También valoro mucho feedback de code reviews y discusiones técnicas porque aceleran bastante la curva de crecimiento.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="responsabilidad equipo confiable ownership senior">
+          <button class="question-head" type="button">
+            <span class="card-id">SOFT 04</span>
+            <span class="question-title-wrap">
+              <span class="question-title">¿Qué significa para ti ser confiable en un equipo?</span>
+              <span class="question-subtitle">Muy alineada con lo que dices que te están midiendo.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <div class="answer-grid">
+              <div class="answer-box full">
+                <div class="mini-label">Respuesta recomendada</div>
+                <div class="answer-copy">Ser confiable no es solo cumplir tareas, sino hacer visible el estado real de las cosas, avisar riesgos a tiempo, dejar código mantenible y no trasladar problemas ocultos al resto del equipo. Para mí también implica responder con criterio cuando algo cambia, no quedarse bloqueado y buscar avanzar sin sacrificar calidad básica.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card" data-search="frases entrevista esto es o n edge cases legibilidad senior communication">
+          <button class="question-head" type="button">
+            <span class="card-id">SOFT 05</span>
+            <span class="question-title-wrap">
+              <span class="question-title">Frases útiles que elevan tu comunicación en entrevista</span>
+              <span class="question-subtitle">Pequeño repertorio para sonar técnico-natural.</span>
+            </span>
+            <span class="caret">⌄</span>
+          </button>
+          <div class="question-body">
+            <ul>
+              <li>Estoy priorizando separación de responsabilidades para que el cambio futuro sea barato.</li>
+              <li>Esta solución es O(n) en tiempo y O(1) en espacio.</li>
+              <li>Primero resolvería la versión correcta y legible; luego evaluaría si vale optimizar.</li>
+              <li>Aquí el trade-off es simplicidad contra flexibilidad.</li>
+              <li>Estoy considerando edge cases y también cómo testear esto sin depender de infraestructura real.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Cierre</div>
+          <h2>Checklist final antes de entrevistar</h2>
+          <p>Úsalo como repaso rápido el mismo día.</p>
+        </div>
+        <div class="section-count">Modo repaso</div>
+      </div>
+
+      <div class="quick-grid">
+        <div class="quick-card">
+          <h3>Dominio técnico</h3>
+          <ul>
+            <li>SOLID explicado con ejemplos reales.</li>
+            <li>Widget, Element y Render Tree claros.</li>
+            <li>BLoC vs Cubit con criterio, no por moda.</li>
+            <li>Future vs Stream e isolates bien diferenciados.</li>
+          </ul>
+        </div>
+        <div class="quick-card">
+          <h3>Arquitectura</h3>
+          <ul>
+            <li>UI, BLoC, Repository y data source claros.</li>
+            <li>Dónde poner llamadas a API y por qué.</li>
+            <li>Trade-offs de complejidad, rendimiento y mantenimiento.</li>
+            <li>Cómo hacer el sistema testeable.</li>
+          </ul>
+        </div>
+        <div class="quick-card">
+          <h3>Entrevista</h3>
+          <ul>
+            <li>Define, explica impacto, conecta con experiencia.</li>
+            <li>Di complejidad cuando resuelvas ejercicios.</li>
+            <li>No olvides edge cases ni validación de supuestos.</li>
+            <li>Habla con naturalidad, no como si leyeras una diapositiva.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer">Tip: usa el buscador para repasar por tema y el modo imprimir si quieres llevarlo a PDF o repasarlo fuera del editor.</p>
+  </main>
+
+  <script>
+    const cards = Array.from(document.querySelectorAll('.question-card'));
+    const searchInput = document.getElementById('searchInput');
+    const expandAllBtn = document.getElementById('expandAllBtn');
+    const collapseAllBtn = document.getElementById('collapseAllBtn');
+
+    function setCardState(card, open) {
+      card.classList.toggle('open', open);
+    }
+
+    cards.forEach((card) => {
+      const head = card.querySelector('.question-head');
+      head.addEventListener('click', () => {
+        setCardState(card, !card.classList.contains('open'));
+      });
+    });
+
+    expandAllBtn.addEventListener('click', () => {
+      cards.forEach((card) => setCardState(card, true));
+    });
+
+    collapseAllBtn.addEventListener('click', () => {
+      cards.forEach((card) => setCardState(card, false));
+    });
+
+    searchInput.addEventListener('input', (event) => {
+      const query = event.target.value.trim().toLowerCase();
+      cards.forEach((card) => {
+        const title = card.innerText.toLowerCase();
+        const tags = (card.dataset.search || '').toLowerCase();
+        const visible = !query || title.includes(query) || tags.includes(query);
+        card.hidden = !visible;
+        if (visible && query) {
+          card.classList.add('open');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
