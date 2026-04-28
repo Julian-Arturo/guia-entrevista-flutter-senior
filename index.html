@@ -755,6 +755,7 @@
           <span>Buscar</span>
           <input id="searchInput" type="text" placeholder="SOLID, Cubit, DevTools, SQL, Git Flow, isolate...">
         </label>
+        <button class="btn" id="listenBtn" type="button" style="color: #fb7185; border-color: #fb7185; transition: all 0.3s ease;">🎙️ Copilot</button>
         <button class="btn" id="expandAllBtn" type="button">Abrir todo</button>
         <button class="btn" id="collapseAllBtn" type="button">Cerrar todo</button>
       </div>
@@ -2585,16 +2586,106 @@
 
     searchInput.addEventListener('input', (event) => {
       const query = event.target.value.trim().toLowerCase();
+      const queryWords = query.split(/\s+/).filter(w => w.length > 2 && !['que', 'del', 'los', 'las', 'por', 'con', 'una', 'uno', 'para', 'como', 'hay', 'una'].includes(w));
+      
       cards.forEach((card) => {
         const title = card.innerText.toLowerCase();
         const tags = (card.dataset.search || '').toLowerCase();
-        const visible = !query || title.includes(query) || tags.includes(query);
+        
+        let visible = false;
+        if (!query) {
+          visible = true;
+        } else {
+          // Búsqueda flexible
+          const matchCount = queryWords.reduce((count, word) => {
+            return count + (title.includes(word) || tags.includes(word) ? 1 : 0);
+          }, 0);
+          visible = title.includes(query) || tags.includes(query) || (queryWords.length > 0 && matchCount >= Math.min(2, queryWords.length));
+        }
+
         card.hidden = !visible;
-        if (visible && query) {
+        if (visible && query.length > 3) {
           card.classList.add('open');
+        } else if (!query) {
+          card.classList.remove('open');
         }
       });
     });
+
+    // Copilot: Reconocimiento de Voz
+    const listenBtn = document.getElementById('listenBtn');
+    let recognition;
+    let isListening = false;
+
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognition = new SpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = 'es-ES';
+
+      recognition.onstart = () => {
+        isListening = true;
+        listenBtn.innerHTML = '🔴 Escuchando...';
+        listenBtn.style.background = 'rgba(251, 113, 133, 0.1)';
+        listenBtn.style.color = '#fb7185';
+      };
+
+      recognition.onresult = (event) => {
+        let finalTranscript = '';
+        let interimTranscript = '';
+
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          if (event.results[i].isFinal) {
+            finalTranscript += event.results[i][0].transcript;
+          } else {
+            interimTranscript += event.results[i][0].transcript;
+          }
+        }
+        
+        // Tomamos el texto más reciente para no saturar la búsqueda
+        const rawText = (finalTranscript || interimTranscript).toLowerCase();
+        const recentText = rawText.split(' ').slice(-15).join(' ');
+        
+        if (recentText.trim().length > 3) {
+           searchInput.value = recentText;
+           searchInput.dispatchEvent(new Event('input'));
+        }
+      };
+
+      recognition.onerror = (event) => {
+        console.error('Error de voz:', event.error);
+        if(event.error === 'not-allowed') {
+          alert('Debes dar permisos de micrófono en el navegador para usar el Copilot.');
+          isListening = false;
+          listenBtn.innerHTML = '🎙️ Copilot';
+          listenBtn.style.background = '';
+        }
+      };
+
+      recognition.onend = () => {
+        if (isListening) {
+          recognition.start();
+        } else {
+          listenBtn.innerHTML = '🎙️ Copilot';
+          listenBtn.style.background = '';
+        }
+      };
+
+      listenBtn.addEventListener('click', () => {
+        if (isListening) {
+          isListening = false;
+          recognition.stop();
+        } else {
+          searchInput.value = '';
+          searchInput.dispatchEvent(new Event('input'));
+          recognition.start();
+        }
+      });
+    } else {
+      listenBtn.style.display = 'none';
+      console.warn('API de reconocimiento de voz no soportada.');
+    }
   </script>
 </body>
 </html>
